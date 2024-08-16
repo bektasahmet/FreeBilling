@@ -1,0 +1,25 @@
+﻿@page
+@model IndexModel
+@{
+    var productName = "Free Billing";
+    // throw new InvalidOperationException("Bad thing happened!");
+    ViewBag.Title = "Home Page";
+}
+
+<h1>@productName</h1>
+<p>@productName is a solution to billing for small companies and individuals</p>
+
+@if(Model.Customers is not null && Model.Customers.Count() > 0)
+{
+    <ul>
+        @foreach (var customer in Model.Customers)
+        {
+            <li>@customer.CompanyName</li>
+        }
+    </ul>  
+}
+else
+{
+    <div>There is no customers...</div>
+}
+

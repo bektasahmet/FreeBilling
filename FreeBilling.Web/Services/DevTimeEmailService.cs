@@ -1,0 +1,17 @@
+﻿namespace FreeBilling.Web.Services
+{
+    public class DevTimeEmailService : IEmailService
+    {
+        private readonly ILogger<DevTimeEmailService> _logger;
+
+        public DevTimeEmailService(ILogger<DevTimeEmailService> logger)
+        {
+            _logger = logger;
+        }
+
+        public void SendMail(string to, string from, string subject, string body)
+        {
+            _logger.LogInformation($"Sending e-mail to {to} with a subject of {subject}");
+        }
+    }
+}
