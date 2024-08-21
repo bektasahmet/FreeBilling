@@ -1,0 +1,24 @@
+GET http://localhost:8888/api/customers
+
+###
+GET http://localhost:8888/api/customers/1
+
+###
+GET http://localhost:8888/api/customers/Paintorama
+
+###
+GET http://localhost:8888/api/timebills/1
+
+###
+POST https://localhost:44345/api/timebills
+Content-Type: application/json
+
+{
+  "hours": 2.5,
+  "billingRate": 125.00,
+  "date": "2024-08-19",
+  "clientRequested": true,
+  "workPerformed": "Added",
+  "customerId": 1,
+  "employeeId": 1
+}

@@ -2,7 +2,9 @@
 module.exports = {
     content: [
         "./Pages/**/*.{html,cshtml}",
-        "./wwwroot/**/*.{html,htm}"
+        "./Areas/**/*.{html,cshtml}",
+        "./wwwroot/**/*.{html,htm}",
+        "./freebilling.app/src/**.{html,js,vue}"
     ],
   theme: {
     extend: {},
