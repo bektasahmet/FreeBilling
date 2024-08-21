@@ -15,13 +15,19 @@ namespace FreeBilling.Web.Data
             _config = config;
         }
 
+        // Bunlar bizim tablomuzda karşılık gelecek olan varlıklarımızdır yani her biri bir sütunumuza karşılık gelir.
         public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<Employee> Employees => Set<Employee>();
         public DbSet<TimeBill> TimeBills => Set<TimeBill>();
 
+        // builder.Services.AddDbContext<BillingContext>(); dedikten sonra UseSqlServer diyip kullanacağımız serverın
+        // connectionstring ile belirtebilmemize yarıyor.
+        // Kısacası bağlantının nasıl yapılacağını burada belirtiyoruz.
+        // optionsbuilder veri tabanı bağlantısı ve efcore configurationlarını yapılandırmak için kullanılıyor.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            base.OnConfiguring(optionsBuilder); // DbContext tarafından varsayılan yapılandırmayı çağırır
+                                                // ve DbContext'in temel yapısı korunmuş olur
 
             var connectionString = _config["ConnectionStrings:BillingDb"];
             optionsBuilder.UseSqlServer(connectionString);

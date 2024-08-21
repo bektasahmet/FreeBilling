@@ -11,15 +11,20 @@ using Microsoft.EntityFrameworkCore;
 using FreeBilling.Web.Data.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args); // builder WebApplication türünde bir nesne ve web uygulamasýný baþlatýrken kullanýlan bir yapýlandýrýcý.
 var connectionString = builder.Configuration.GetConnectionString("BillingDb") ?? throw new InvalidOperationException("Connection string 'BillingContextConnection' not found.");
 
-IConfigurationBuilder configBuilder = builder.Configuration;
-configBuilder.Sources.Clear();
-configBuilder.AddJsonFile("appsettings.json")
-    .AddJsonFile("appsettings.development.json", true)
-    .AddUserSecrets(Assembly.GetExecutingAssembly())
-    .AddEnvironmentVariables()
+// IConfigurationBuilder ; yapýlandýrma kaynaklarýný tanýmlamak için kullanýlan bir interface
+// builder.Configuration ; yapýlandýrýcýnýn yapýlandýrma ayarlarýna eriþmek için kullanýlan bir özellik.
+IConfigurationBuilder configBuilder = builder.Configuration; //configBuilder IConfigurationBuilder tipinde yapýlandýrma
+                                                             //ayarlarýný temsil eden bir nesneye atanýr bu sayede yapýlandýrma
+                                                             //ayarlarýna eriþebiliriz
+configBuilder.Sources.Clear(); // Yapýlandýrýcýda daha önce eklenmiþ olan tüm yapýlandýrma kaynaklarýný temizler.
+configBuilder.AddJsonFile("appsettings.json") // IConfigurationBuilder nesnesine = configBuilder'a Json dosyasý ekler.
+                                              // Uygulamanýn yapýlandýrma ayarlarýnýn merkezi bir dosyadan eriþilebilmesini saðlar.
+    .AddJsonFile("appsettings.development.json", true) // Eðer belirtilen dosya ortada yoksa opsiyonel olduðu için uygulama çalýþmaya devam eder
+    .AddUserSecrets(Assembly.GetExecutingAssembly()) // Kullancýya özel gizli anahtarlarý nesnenin içine ekliyor 
+    .AddEnvironmentVariables() // nesneye ortam deðiþkenlerini ekliyor. 
     .AddCommandLine(args);
 
 
