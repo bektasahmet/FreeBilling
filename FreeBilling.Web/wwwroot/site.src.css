@@ -7,7 +7,7 @@
         @apply font-bold;
     }
 
-    input[type=text], input[type=email], textarea, select {
+    input[type=text], input[type=email], input[type=password] ,textarea, select {
         @apply w-full p-1 border-2 rounded text-lg;
     }
 
@@ -29,6 +29,11 @@
 
     h4 {
         @apply text-lg italic;
+    }
+
+    button {
+        @apply bg-gray-600 text-white font-bold hover:bg-gray-800 rounded-lg p-2;
+
     }
 }
 
