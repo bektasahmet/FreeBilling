@@ -1,5 +1,6 @@
 ﻿using FreeBilling.Data.Entities;
 using FreeBilling.Web.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace FreeBilling.Web.Controllers
             _logger = logger;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet("api/customers")]
         public async Task<ActionResult<IEnumerable<Customer>>> Get(bool withAddresses = false)
         {

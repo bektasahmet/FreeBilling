@@ -21,9 +21,10 @@ namespace FreeBilling.Web.Apis;
                 .WithName("GetTimeBill")
                 .RequireAuthorization("ApiPolicy");
 
-            group.MapPost("", PostTimeBill)
+        group.MapPost("", PostTimeBill)
                 .AddEndpointFilter<ValidateEndpointFilter<TimeBillModel>>()
                 .RequireAuthorization("ApiPolicy");
+                
         }
         
         public static async Task<IResult> GetTimeBill(IBillingRepository repository, int id)
@@ -45,7 +46,7 @@ namespace FreeBilling.Web.Apis;
 
             var employee = await repository.GetEmployee(user.Identity?.Name!);
 
-            if(employee is null) Results.BadRequest("No employee with user's email");
+            if(employee is null) return Results.BadRequest("No employee with user's email");
 
             newEntity.EmployeeId = employee.Id;
 
@@ -59,7 +60,7 @@ namespace FreeBilling.Web.Apis;
             //    WorkPerformed = model.WorkPerformed,
             //};
            
-                repository.AddEntity(model);
+                repository.AddEntity(newEntity);
                 if (await repository.SaveChanges())
                 {
                     var newBill = await repository.GetTimeBill(newEntity.Id);

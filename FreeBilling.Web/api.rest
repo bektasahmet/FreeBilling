@@ -1,7 +1,8 @@
 GET http://localhost:8888/api/customers
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFobWV0Iiwic3ViIjoiYWhtZXQiLCJqdGkiOiJkZGJjOGIzIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6OTAzMCIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzQ1IiwiaHR0cDovL2xvY2FsaG9zdDo4ODg4IiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIyMSIsImh0dHA6Ly9sb2NhbGhvc3Q6NTA2OCJdLCJuYmYiOjE3MjQzMjg3NDEsImV4cCI6MTczMjI3NzU0MSwiaWF0IjoxNzI0MzI4NzQyLCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.NwsT-FNpfeezmOan6Weyu00H61-bHIiBmGMMHsANsHc
 
 ###
-GET http://localhost:8888/api/customers/1
+GET http://localhost:8888/api/customers/1/timebills
 
 ###
 GET http://localhost:8888/api/customers/Paintorama
@@ -10,15 +11,22 @@ GET http://localhost:8888/api/customers/Paintorama
 GET http://localhost:8888/api/timebills/1
 
 ###
-POST https://localhost:44345/api/timebills
+POST http://localhost:8888/api/timebills
 Content-Type: application/json
 
 {
-  "hours": 2.5,
-  "billingRate": 125.00,
+  "hoursWorked": 2.5,
+  "rate": 125.00,
   "date": "2024-08-19",
-  "clientRequested": true,
-  "workPerformed": "Added",
+  "work": "Added work perfomed",
   "customerId": 1,
   "employeeId": 1
+}
+###
+POST http://localhost:8888/api/auth/token
+Content-Type: application/json
+
+{
+  "userName": "ahmet.bektass81@hotmail.com",
+  "password": "Ahmet123."
 }
