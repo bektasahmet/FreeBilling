@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>c3023f51-de9a-4c42-93e5-4d56c6c7ab55</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.1" />
   </ItemGroup>
 
 </Project>

@@ -558,7 +558,7 @@ label {
   font-weight: 700;
 }
 
-input[type=text], input[type=email], input[type=password] ,textarea, select {
+input[type=text], input[type=email], input[type=number], input[type=date], input[type=password], input[type=datetime], textarea, select {
   width: 100%;
   border-radius: 0.25rem;
   border-width: 2px;
@@ -621,8 +621,20 @@ button:hover {
   margin-bottom: 0.75rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .flex {
   display: flex;
+}
+
+.table {
+  display: table;
 }
 
 .hidden {
@@ -643,6 +655,10 @@ button:hover {
 
 .w-full {
   width: 100%;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-between {
@@ -677,9 +693,19 @@ button:hover {
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
 }
 
+.bg-blue-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+}
+
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
 .bg-green-600 {
@@ -690,6 +716,16 @@ button:hover {
 .bg-green-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+}
+
+.bg-green-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 101 52 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .p-2 {
@@ -709,6 +745,11 @@ button:hover {
   line-height: 2rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -716,6 +757,16 @@ button:hover {
 .text-blue-300 {
   --tw-text-opacity: 1;
   color: rgb(147 197 253 / var(--tw-text-opacity));
+}
+
+.text-blue-900 {
+  --tw-text-opacity: 1;
+  color: rgb(30 58 138 / var(--tw-text-opacity));
+}
+
+.text-red-900 {
+  --tw-text-opacity: 1;
+  color: rgb(127 29 29 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -727,6 +778,11 @@ button:hover {
   font-style: italic;
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-green-800:hover {

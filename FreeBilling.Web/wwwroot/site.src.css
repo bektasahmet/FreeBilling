@@ -7,7 +7,7 @@
         @apply font-bold;
     }
 
-    input[type=text], input[type=email], input[type=password] ,textarea, select {
+    input[type=text], input[type=email], input[type=number], input[type=date], input[type=password], input[type=datetime], textarea, select {
         @apply w-full p-1 border-2 rounded text-lg;
     }
 

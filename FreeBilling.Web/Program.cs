@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using FreeBilling.Web.Data.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args); // builder WebApplication türünde bir nesne ve web uygulamasýný baþlatýrken kullanýlan bir yapýlandýrýcý.
 var connectionString = builder.Configuration.GetConnectionString("BillingDb") ?? throw new InvalidOperationException("Connection string 'BillingContextConnection' not found.");
@@ -37,12 +39,20 @@ builder.Services.AddIdentityApiEndpoints<TimeBillUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequiredLength = 8;
-    options.Password.RequireUppercase = true;
 })
     .AddEntityFrameworkStores<BillingContext>();
 
 builder.Services.AddAuthentication()
-    .AddBearerToken();
+  .AddJwtBearer(cfg =>
+  {
+      cfg.TokenValidationParameters = new TokenValidationParameters()
+      {
+          ValidIssuer = builder.Configuration["Token:Issuer"],
+          ValidAudience = builder.Configuration["Token:Audience"],
+          IssuerSigningKey = new SymmetricSecurityKey(
+          Encoding.UTF8.GetBytes(builder.Configuration["Token:Key"]!))
+      };
+  });
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("api", cfg =>
@@ -64,7 +74,9 @@ builder.Services.AddAuthorization(cfg =>
 builder.Services.AddScoped<IBillingRepository, BillingRepository>();
 
 builder.Services.AddControllers();
-builder.Services.AddValidatorsFromAssemblyContaining<TimeBillModel> ();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddValidatorsFromAssemblyContaining<TimeBillModel>();
 
 TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetEntryAssembly()!);
 
@@ -72,6 +84,13 @@ TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetEntryAssembly()!);
 
 
 var app = builder.Build();
+
+if (builder.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseStaticFiles();
 app.UseRouting();
@@ -92,9 +111,12 @@ if (builder.Environment.IsDevelopment())
 //});
 
 TimeBillsApi.Register(app);
+AuthApi.Register(app);
+EmployeesApi.Register(app);
 
 app.MapControllers();
 
+app.MapFallbackToPage("/customerBilling");
 app.MapGroup("api/auth")
     .MapIdentityApi<TimeBillUser>();
 

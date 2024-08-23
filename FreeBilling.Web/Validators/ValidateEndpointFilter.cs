@@ -1,6 +1,5 @@
 ﻿
 using FluentValidation;
-using FreeBilling.Web.Models;
 
 namespace FreeBilling.Web.Validators
 {

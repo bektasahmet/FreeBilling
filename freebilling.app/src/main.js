@@ -1,6 +1,9 @@
-import './index.css'
+import '../../FreeBilling.Web/wwwroot/site.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from "./router";
 
-createApp(App).mount('#app')
+createApp(App)
+    .use(router)
+    .mount('#app')
