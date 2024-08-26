@@ -32,10 +32,10 @@
         <form novalidate @submit.prevent="login">
             <div v-if="message">{{ message }}</div>
             <label for="userName">Username</label>
-            <input type="text" id="userName" />
+            <input type="text" id="userName" v-model="userName" />
 
             <label for="password">Password</label>
-            <input type="password" id="password" />
+            <input type="password" id="password" v-model="password"/>
             <button type="submit">Login</button>
         </form>
         

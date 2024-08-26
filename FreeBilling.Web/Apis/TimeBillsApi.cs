@@ -18,12 +18,12 @@ namespace FreeBilling.Web.Apis;
                 .AllowAnonymous();
 
             group.MapGet("{id:int}", GetTimeBill)
-                .WithName("GetTimeBill")
-                .RequireAuthorization("ApiPolicy");
+                .WithName("GetTimeBill") 
+                /*.RequireAuthorization("ApiPolicy")*/;
 
         group.MapPost("", PostTimeBill)
                 .AddEndpointFilter<ValidateEndpointFilter<TimeBillModel>>()
-                .RequireAuthorization("ApiPolicy");
+                /*.RequireAuthorization("ApiPolicy")*/;
                 
         }
         
@@ -38,17 +38,17 @@ namespace FreeBilling.Web.Apis;
             
         }
 
-        public static async Task<IResult> PostTimeBill(IBillingRepository repository, TimeBillModel model,
-            ClaimsPrincipal user)
+        public static async Task<IResult> PostTimeBill(IBillingRepository repository, TimeBillModel model
+            /*,ClaimsPrincipal user*/)
         {
 
             var newEntity = model.Adapt<TimeBill>();
 
-            var employee = await repository.GetEmployee(user.Identity?.Name!);
+            //var employee = await repository.GetEmployee(user.Identity?.Name!);
 
-            if(employee is null) return Results.BadRequest("No employee with user's email");
+            //if(employee is null) return Results.BadRequest("No employee with user's email");
 
-            newEntity.EmployeeId = employee.Id;
+            //newEntity.EmployeeId = employee.Id;
 
             //var newEntity = new TimeBill()
             //{

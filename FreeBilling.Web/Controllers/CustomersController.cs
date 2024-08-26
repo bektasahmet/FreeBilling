@@ -19,7 +19,7 @@ namespace FreeBilling.Web.Controllers
             _logger = logger;
         }
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet("api/customers")]
         public async Task<ActionResult<IEnumerable<Customer>>> Get(bool withAddresses = false)
         {
@@ -46,6 +46,7 @@ namespace FreeBilling.Web.Controllers
             
         }
 
+        [AllowAnonymous]
         [HttpGet("api/customers/{id:int}")]
         public async Task<ActionResult<Customer>> GetById(int id)
         {
@@ -69,6 +70,7 @@ namespace FreeBilling.Web.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("api/customers/{name}")]
         public async Task<Customer?> GetByName(string name)
         {
