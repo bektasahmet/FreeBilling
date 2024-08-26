@@ -1,6 +1,6 @@
 <script setup>
     import { onMounted, ref, reactive } from "vue";
-    import axios from "axios";
+
     import state from "@/state";
     import { useRouter } from "vue-router"
 
@@ -12,21 +12,11 @@
 
     onMounted(async () => {
         try {
-            const employeeResult = await axios.get("/api/employees", {
-                headers: {
-                    "authorization": `Bearer ${state.token}`
-                }
-            });
-            employees.splice(0, employees.length, ...employeeResult.data);
 
+            await state.loadEmployees();
 
+            await state.loadCustomers();
 
-            const customerResult = await axios.get("/api/customers", {
-                headers: {
-                    "authorization": `Bearer ${state.token}`
-                }
-            });
-            customers.splice(0, customers.length, ...customerResult.data);
         } catch (e) {
             message.value = e;
         }
@@ -35,12 +25,7 @@
 
     async function saveBill() {
         try {
-            const result = await axios.post("/api/timebills", bill.value, {
-                headers: {
-                    "authorization": `Bearer ${state.token}`
-                }
-            })
-
+            await state.saveBill(bill.value);
             router.push("/");
         } catch(e){
             message.value = e;
@@ -67,7 +52,7 @@
 
             <label for="employee">Employee</label>
             <select id="employee" name="employee" v-model="bill.employeeId">
-                <option v-for="e in employees" :key="e.id" :value="e.id">{{ e.name }}</option>
+                <option v-for="e in state.employees" :key="e.id" :value="e.id">{{ e.name }}</option>
             </select>
 
             <label for="rate">Rate</label>
@@ -75,7 +60,7 @@
 
             <label for="client">Client</label>
             <select id="client" name="client" v-model="bill.customerId">
-                <option v-for="c in customers" :value="c.id" :key="c.id">{{ c.companyName }}</option>
+                <option v-for="c in state.customers" :value="c.id" :key="c.id">{{ c.companyName }}</option>
             </select>
 
             <div class="mt-2">

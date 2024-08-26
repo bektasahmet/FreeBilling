@@ -1,42 +1,16 @@
 <script setup>
-    import { ref, reactive, computed, onMounted } from "vue";
+    import { ref, reactive, computed, onMounted, watch} from "vue";
     import { formatMoney } from "@/formatters";
     import axios from "axios";
     import WaitCursor from "@/components/WaitCursor.vue"
+    import state from "@/state"
 
     const name = ref("Ahmet");
     const john = ref("John");
     const isBusy = ref(false);
+    const customerId = ref(0);
 
-    const bills = reactive([
-        //{
-        //  "hoursWorked": 2.5,
-        //  "rate": 125.00,
-        //  "date": "2024-08-19",
-        //  "work": "Added 1.0",
-        //  "customerId": 1,
-        //  "employeeId": 1
-        //},
-
-        //{
-        //  "hoursWorked": 2.0,
-        //  "rate": 126.00,
-        //  "date": "2024-08-20",
-        //  "work": "Added 1.2",
-        //  "customerId": 2,
-        //  "employeeId": 2
-        //},
-
-        //{
-        //  "hoursWorked": 2.5,
-        //  "rate": 127.00,
-        //  "date": "2024-08-21",
-        //  "work": "Added 1.3",
-        //  "customerId": 3,
-        //  "employeeId": 3
-        //}
-
-    ]);
+  
 
     function changeMe(){
         name.value += " +";
@@ -44,7 +18,7 @@
 
 
     function newItem() {
-        bills.push({
+        state.timebills.push({
             customerId: 4,
             employeeId: 4,
             hoursWorked: 5.0,
@@ -55,17 +29,15 @@
     }
 
     const total = computed(() => {
-        return bills.map(b => b.billingRate * b.hours)
+        return state.timebills.map(b => b.billingRate * b.hours)
             .reduce((b, t) => t + b, 0);
     });
 
     onMounted(async () => {
         try {
             isBusy.value = true;
-            const result = await axios("/api/customers/1/timebills");
-            if (result.status === 200) {
-                bills.splice(0, bills.length, ...result.data);
-            }
+            await state.loadCustomers();
+            
         } catch {
             console.log("Failed");
         } finally {
@@ -73,6 +45,15 @@
         }
 
     });
+
+    watch(customerId, async() => {
+        try {
+            isBusy.value = true;
+            await state.loadTimeBills(customerId.value);
+        } catch {
+            isBusy.value = false;
+        }
+    })
 </script>
 
 <template>
@@ -87,20 +68,31 @@
         <button class="btn" @click="changeMe">Click Me!</button>
         <img src="/john.jpg" v-bind:alt="john" v:bindtitle="john.toUpperCase()"/>
         <button class="btn" @click="newItem">New Item</button>-->
-        <table>
+        <div>
+            <label>Customers</label>
+            <select class="w-96 mx-2" v-model="customerId">
+                <option v-for="c in state.customers" :value="c.id">{{ c.companyName }}</option>
+            </select>
+        </div>
+        <table class="w-full">
             <thead>
-                <tr>
+                <tr class="text-bold bg-blue-800 text-white">
                     <td>Hours</td>
                     <td>Date</td>
                     <td>Description</td>
+                    <td>Rate</td>
+                    <td>Employee</td>
                 </tr>
             </thead>
 
             <tbody>
-                <tr v-for="b in bills">
+                <tr v-for="b in state.timebills">
                     <td>{{ b.hours }}</td>
                     <td>{{ b.date }}</td>
                     <td>{{ b.workPerformed }}</td>
+                    <td>{{ b.billingRate }}</td>
+                    <td>{{ b.employee.name }}</td>
+
                 </tr>
             </tbody>
         </table>
