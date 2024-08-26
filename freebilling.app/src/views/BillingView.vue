@@ -12,10 +12,6 @@
 
     onMounted(async () => {
         try {
-            if (!state.token) {
-                router.push("/Login");
-            }
-
             const employeeResult = await axios.get("/api/employees", {
                 headers: {
                     "authorization": `Bearer ${state.token}`
