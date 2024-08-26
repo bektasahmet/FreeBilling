@@ -71,7 +71,7 @@
 
             <label for="employee">Employee</label>
             <select id="employee" name="employee" v-model="bill.employeeId">
-                <option v-for="e in employee" :key="e.id" :value="e.id">{{ e.name }}</option>
+                <option v-for="e in employees" :key="e.id" :value="e.id">{{ e.name }}</option>
             </select>
 
             <label for="rate">Rate</label>

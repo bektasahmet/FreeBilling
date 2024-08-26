@@ -7,7 +7,7 @@ public static class EmployeesApi
     public static void Register(WebApplication app)
     {
         app.MapGet("/api/employees", GetEmployees)
-            .RequireAuthorization("ApiPolicy");
+            /*.RequireAuthorization("ApiPolicy")*/;
     }
 
     public static async Task<IResult> GetEmployees(IBillingRepository repository)
