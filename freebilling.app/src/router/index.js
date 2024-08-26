@@ -7,15 +7,18 @@ import { createRouter, createWebHashHistory, createWebHistory } from "vue-router
 
 const routes = [
     {
-    path: "/",
-    component: HomeView
+        name: "Home",
+        path: "/",
+        component: HomeView
     },
     {
+        name: "Billing",
         path: "/billing",
         component: BillingView
     },
     {
-        path: "/Login",
+        name: "Login",
+        path: "/login",
         component: LoginView
     }
 ];
@@ -23,6 +26,14 @@ const routes = [
 const router = createRouter({
     routes,
     history: createWebHistory()
+});
+
+router.beforeEach((to) => {
+    if (to.name !== "Login") {
+        if (!state.token) {
+            return { name: "Login" }
+        }
+    }
 });
 
 
